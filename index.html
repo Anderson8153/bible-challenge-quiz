@@ -123,116 +123,130 @@
       animation: popIn 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
     }
 
-    /* Estilos Específicos para a Tela da Plateia (Auto-ajuste via vh/vw) */
+    /* Estilos Específicos para a Tela da Plateia (Sem sobreposição) */
     .audience-fullscreen {
       height: 100vh;
       width: 100vw;
-      overflow: hidden; /* Evita barras de rolagem no projetor */
-      padding: 3vh 4vw;
+      overflow: hidden;
+      padding: 2vh 3vw;
       box-sizing: border-box;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      gap: 1.5vh;
     }
   </style>
 </head>
 <body class="text-white font-sans antialiased select-none min-h-screen flex flex-col justify-between p-3 md:p-5" ondblclick="toggleFullScreenIfAudience(event)">
 
   <!-- =================================================================== -->
-  <!-- 1. CONTAINER TELA DA PLATEIA (MODO AUDIENCE V9) - RESPONSIVO TV     -->
+  <!-- 1. CONTAINER TELA DA PLATEIA (MODO AUDIENCE V9) - SEM SOBREPOSIÇÃO  -->
   <!-- =================================================================== -->
   <div id="audience-view" class="hidden audience-fullscreen">
-    <!-- BARRA SUPERIOR PLATEIA (APENAS BOTÃO DE TELA CHEIA) -->
-    <div class="w-full flex justify-end items-center h-[5vh]">
-      <button id="audience-fullscreen-btn" onclick="toggleFullScreen()" class="bg-slate-900/80 hover:bg-slate-800 text-[1.5vh] text-slate-300 border border-slate-700 px-[2vh] py-[1vh] rounded-xl transition flex items-center gap-2 cursor-pointer shadow-md">
-        <i class="fa-solid fa-expand"></i> Ativar Tela Cheia
-      </button>
-    </div>
-
-    <!-- HEADER LOGO CENTRALIZADO PLATEIA -->
-    <div class="flex flex-col items-center text-center h-[25vh] justify-center">
-      <div id="audience-logo-custom-container" class="hidden mb-[1vh]">
-        <img id="audience-logo-img" src="" alt="Quiz Logo" class="max-h-[15vh] object-contain rounded-xl" />
-      </div>
-      <div id="audience-logo-text-container" class="flex flex-col items-center">
-        <h1 class="logo-bible text-[7vh] text-white leading-none tracking-tight">
-          B<span class="i-custom" style="width:0.55em;">I</span>BLE
-        </h1>
-        <span class="font-tech font-extrabold text-[2.5vh] text-white tracking-[0.25em] uppercase -mt-1 mb-1">
-          CHALLENGE
-        </span>
-        <div class="bg-brand-cyan text-black px-[2vh] py-[0.5vh] rounded-md shadow-glow-cyan">
-          <span class="font-tech font-extrabold text-[1.8vh] tracking-wider uppercase">
-            ESPECIAL : <span class="font-black">JOÃO</span>
-          </span>
+    
+    <!-- 1. TOPO: LOGO COMPACTO + VALOR DA PERGUNTA + BOTÃO TELA CHEIA -->
+    <header class="w-full max-w-[94vw] mx-auto flex items-center justify-between gap-4 shrink-0 pt-[0.5vh]">
+      <!-- Logo Esquerda -->
+      <div class="flex items-center">
+        <div id="audience-logo-custom-container" class="hidden">
+          <img id="audience-logo-img" src="" alt="Quiz Logo" class="max-h-[9vh] object-contain rounded-xl" />
         </div>
-        <span class="font-orbitron font-extrabold text-[3vh] text-white tracking-widest mt-[0.5vh]">
-          2026
-        </span>
+        <div id="audience-logo-text-container" class="flex items-center gap-[1.5vw]">
+          <div class="flex flex-col items-start">
+            <h1 class="logo-bible text-[4.2vh] text-white leading-none tracking-tight">
+              B<span class="i-custom" style="width:0.55em;">I</span>BLE
+            </h1>
+            <span class="font-tech font-extrabold text-[1.6vh] text-white tracking-[0.25em] uppercase">
+              CHALLENGE
+            </span>
+          </div>
+          <div class="flex flex-col items-start border-l border-white/15 pl-[1.5vw]">
+            <div class="bg-brand-cyan text-black px-[1.2vh] py-[0.3vh] rounded shadow-glow-cyan">
+              <span class="font-tech font-extrabold text-[1.4vh] tracking-wider uppercase">
+                ESPECIAL : <span class="font-black">JOÃO</span>
+              </span>
+            </div>
+            <span class="font-orbitron font-extrabold text-[2.2vh] text-white tracking-widest mt-[0.3vh]">
+              2026
+            </span>
+          </div>
+        </div>
       </div>
 
-      <!-- BADGE DE VALOR DA PERGUNTA (AUTO-AJUSTÁVEL) -->
-      <div id="audience-points-box" class="mt-[2vh] bg-brand-card/95 border-2 border-brand-cyan/50 px-[5vw] py-[1.2vh] rounded-2xl text-center shadow-glow-cyan transition-all duration-300">
-        <span class="text-[1.4vh] font-tech text-slate-300 uppercase tracking-[0.2em] block font-bold mb-[0.3vh]">ESTA PERGUNTA VALE</span>
-        <span class="font-orbitron font-black text-[4.5vh] text-brand-cyan tracking-wider drop-shadow-md">
+      <!-- Centro: Badge de Pontos da Pergunta -->
+      <div id="audience-points-box" class="bg-brand-card/95 border-2 border-brand-cyan/50 px-[3.5vw] py-[0.8vh] rounded-2xl text-center shadow-glow-cyan transition-all duration-300">
+        <span class="text-[1.2vh] font-tech text-slate-300 uppercase tracking-[0.2em] block font-bold">ESTA PERGUNTA VALE</span>
+        <span class="font-orbitron font-black text-[3.4vh] text-brand-cyan tracking-wider drop-shadow-md leading-tight">
           <span id="audience-question-val-display">10</span> PONTOS
         </span>
       </div>
 
+      <!-- Direita: Botão Tela Cheia (esconde automaticamente ao entrar em fullscreen) -->
+      <div class="min-w-[14vw] flex justify-end">
+        <button id="audience-fullscreen-btn" onclick="toggleFullScreen()" class="bg-slate-900/80 hover:bg-slate-800 text-[1.5vh] text-slate-300 border border-slate-700 px-[2vh] py-[1vh] rounded-xl transition flex items-center gap-2 cursor-pointer shadow-md">
+          <i class="fa-solid fa-expand"></i> Ativar Tela Cheia
+        </button>
+      </div>
+    </header>
+
+    <!-- 2. ÁREA CENTRAL DINÂMICA: PERGUNTA OU BANNER DO BUZZER -->
+    <section class="w-full max-w-[92vw] mx-auto flex flex-col items-center justify-center shrink-0">
       <!-- CAIXA DA PERGUNTA ATUAL NA TELA DA PLATEIA -->
-      <div id="audience-question-box" class="hidden mt-[2vh] w-full max-w-[85vw] mx-auto bg-brand-card/95 border-2 border-brand-gold/60 px-[4vw] py-[2vh] rounded-3xl text-center shadow-glow-gold transition-all duration-300 animate-pop-in">
-        <div class="flex items-center justify-center gap-2 mb-[0.8vh]">
-          <span id="audience-q-category" class="bg-brand-gold/20 border border-brand-gold/40 text-brand-gold text-[1.4vh] font-tech font-extrabold px-3 py-0.5 rounded-full uppercase tracking-widest">
+      <div id="audience-question-box" class="hidden w-full bg-brand-card/95 border-2 border-brand-gold/60 px-[3vw] py-[1.6vh] rounded-3xl text-center shadow-glow-gold transition-all duration-300 animate-pop-in">
+        <div class="flex items-center justify-center mb-[0.6vh]">
+          <span id="audience-q-category" class="bg-brand-gold/20 border border-brand-gold/40 text-brand-gold text-[1.4vh] font-tech font-extrabold px-4 py-0.5 rounded-full uppercase tracking-widest">
             CATEGORIA • LIVRO
           </span>
         </div>
-        <p id="audience-q-text" class="font-sans font-extrabold text-[3.2vh] text-white leading-snug drop-shadow">
+        <p id="audience-q-text" class="font-sans font-extrabold text-[2.8vh] text-white leading-snug drop-shadow max-w-[82vw] mx-auto">
           Texto da pergunta aparecerá aqui...
         </p>
-        <div id="audience-q-options" class="hidden grid-cols-2 gap-[1.5vw] mt-[1.5vh] text-left">
+        <div id="audience-q-options" class="hidden grid-cols-2 gap-[1.2vw] mt-[1.4vh] text-left max-w-[82vw] mx-auto">
           <!-- Alternativas A, B, C, D injetadas via JS se existirem -->
         </div>
       </div>
 
-      <!-- BANNER TOPO ACIONAMENTO RESPOSTA (PLATEIA - AMPLIADO E COBRINDO O VALOR DA PERGUNTA) -->
-      <div id="audience-buzzer-banner" class="mt-[3vh] w-full max-w-6xl mx-auto flex items-center justify-center hidden">
-        <div id="audience-buzzer-card" class="bg-brand-card/98 border-4 rounded-3xl px-[6vw] py-[3vh] text-center shadow-2xl transition-all duration-300 w-full">
-          <span class="text-[2.2vh] font-tech font-extrabold tracking-[0.2em] text-slate-300 uppercase block mb-[1vh]">
+      <!-- BANNER ACIONAMENTO RESPOSTA -->
+      <div id="audience-buzzer-banner" class="w-full max-w-[80vw] mx-auto flex items-center justify-center hidden">
+        <div id="audience-buzzer-card" class="bg-brand-card/98 border-4 rounded-3xl px-[4vw] py-[2vh] text-center shadow-2xl transition-all duration-300 w-full animate-pop-in">
+          <span class="text-[1.8vh] font-tech font-extrabold tracking-[0.2em] text-slate-300 uppercase block mb-[0.5vh]">
             ⚡ APERTOU O BOTÃO PRIMEIRO!
           </span>
-          <h2 id="audience-buzzer-name" class="font-orbitron font-black text-[9vh] uppercase tracking-wider leading-none">
+          <h2 id="audience-buzzer-name" class="font-orbitron font-black text-[6.5vh] uppercase tracking-wider leading-none">
             PARTICIPANTE 1
           </h2>
         </div>
       </div>
-    </div>
+    </section>
 
-    <!-- PAINEL CENTRAL PLATEIA (SEM RÓTULOS JOGADOR 1 / JOGADOR 2) -->
-    <div class="w-full max-w-[90vw] mx-auto grid grid-cols-3 gap-[4vw] items-center h-[50vh] mt-[2vh]">
+    <!-- 3. PAINEL INFERIOR: JOGADORES E CRONÔMETRO (OCUPA O ESPAÇO RESTANTE SEM COLIDIR) -->
+    <main class="w-full max-w-[92vw] mx-auto grid grid-cols-3 gap-[3vw] items-stretch flex-1 min-h-0">
       
       <!-- CARD JOGADOR 1 -->
-      <div id="audience-p1-card" class="bg-brand-card/95 border-2 border-brand-cardBorder rounded-3xl p-[3vh] flex flex-col items-center justify-center gap-[4vh] h-full transition-all duration-300 shadow-2xl">
-        <h3 id="audience-p1-name" class="font-orbitron font-black text-[6vh] text-white uppercase text-center tracking-wide leading-tight drop-shadow-lg break-words w-full px-[1vw]">
-          Participante 1
-        </h3>
-        <div class="w-full bg-black/70 border border-white/10 rounded-2xl py-[2vh] text-center shadow-inner mb-[1vh]">
-          <span class="text-[1.5vh] font-tech text-slate-400 uppercase tracking-widest block mb-[1vh] font-bold">PONTUAÇÃO</span>
-          <span id="audience-p1-score" class="font-orbitron font-black text-[10vh] leading-none text-brand-cyan drop-shadow-md">0</span>
+      <div id="audience-p1-card" class="bg-brand-card/95 border-2 border-brand-cardBorder rounded-3xl p-[2.2vh] flex flex-col items-center justify-between h-full transition-all duration-300 shadow-2xl">
+        <div class="flex-1 flex items-center justify-center w-full">
+          <h3 id="audience-p1-name" class="font-orbitron font-black text-[4.8vh] text-white uppercase text-center tracking-wide leading-tight drop-shadow-lg break-words w-full px-[1vw]">
+            Participante 1
+          </h3>
+        </div>
+        <div class="w-full bg-black/70 border border-white/10 rounded-2xl py-[1.5vh] text-center shadow-inner shrink-0">
+          <span class="text-[1.4vh] font-tech text-slate-400 uppercase tracking-widest block mb-[0.4vh] font-bold">PONTUAÇÃO</span>
+          <span id="audience-p1-score" class="font-orbitron font-black text-[8.5vh] leading-none text-brand-cyan drop-shadow-md">0</span>
         </div>
       </div>
 
       <!-- CRONÔMETRO CENTRAL -->
       <div class="flex flex-col items-center justify-center h-full">
-        <div class="relative w-[38vmin] h-[38vmin] flex items-center justify-center">
+        <div class="relative w-[30vmin] h-[30vmin] max-w-full max-h-full flex items-center justify-center">
           <svg class="w-full h-full transform -rotate-90" viewBox="0 0 256 256">
             <circle cx="128" cy="128" r="110" stroke="rgba(255,255,255,0.08)" stroke-width="16" fill="none" />
             <circle id="audience-timer-ring" cx="128" cy="128" r="110" stroke="#00C2CB" stroke-width="16" fill="none" stroke-dasharray="691.1" stroke-dashoffset="0" stroke-linecap="round" class="transition-all duration-300" />
           </svg>
           <div class="absolute inset-0 flex flex-col items-center justify-center text-center">
-            <span id="audience-timer-display" class="font-orbitron font-black text-[12vmin] text-white leading-none drop-shadow-lg">
+            <span id="audience-timer-display" class="font-orbitron font-black text-[9.5vmin] text-white leading-none drop-shadow-lg">
               60
             </span>
-            <span id="audience-timer-label" class="font-tech font-bold text-[2vmin] text-slate-400 uppercase tracking-[0.25em] mt-[1vh]">
+            <span id="audience-timer-label" class="font-tech font-bold text-[1.8vmin] text-slate-400 uppercase tracking-[0.25em] mt-[0.6vh]">
               SEGUNDOS
             </span>
           </div>
@@ -240,19 +254,21 @@
       </div>
 
       <!-- CARD JOGADOR 2 -->
-      <div id="audience-p2-card" class="bg-brand-card/95 border-2 border-brand-cardBorder rounded-3xl p-[3vh] flex flex-col items-center justify-center gap-[4vh] h-full transition-all duration-300 shadow-2xl">
-        <h3 id="audience-p2-name" class="font-orbitron font-black text-[6vh] text-white uppercase text-center tracking-wide leading-tight drop-shadow-lg break-words w-full px-[1vw]">
-          Participante 2
-        </h3>
-        <div class="w-full bg-black/70 border border-white/10 rounded-2xl py-[2vh] text-center shadow-inner mb-[1vh]">
-          <span class="text-[1.5vh] font-tech text-slate-400 uppercase tracking-widest block mb-[1vh] font-bold">PONTUAÇÃO</span>
-          <span id="audience-p2-score" class="font-orbitron font-black text-[10vh] leading-none text-brand-pink drop-shadow-md">0</span>
+      <div id="audience-p2-card" class="bg-brand-card/95 border-2 border-brand-cardBorder rounded-3xl p-[2.2vh] flex flex-col items-center justify-between h-full transition-all duration-300 shadow-2xl">
+        <div class="flex-1 flex items-center justify-center w-full">
+          <h3 id="audience-p2-name" class="font-orbitron font-black text-[4.8vh] text-white uppercase text-center tracking-wide leading-tight drop-shadow-lg break-words w-full px-[1vw]">
+            Participante 2
+          </h3>
+        </div>
+        <div class="w-full bg-black/70 border border-white/10 rounded-2xl py-[1.5vh] text-center shadow-inner shrink-0">
+          <span class="text-[1.4vh] font-tech text-slate-400 uppercase tracking-widest block mb-[0.4vh] font-bold">PONTUAÇÃO</span>
+          <span id="audience-p2-score" class="font-orbitron font-black text-[8.5vh] leading-none text-brand-pink drop-shadow-md">0</span>
         </div>
       </div>
-    </div>
+    </main>
 
-    <!-- RODAPÉ PLATEIA -->
-    <footer class="text-[1.5vh] h-[3vh] font-tech text-slate-500 uppercase tracking-widest text-center">
+    <!-- 4. RODAPÉ PLATEIA -->
+    <footer class="text-[1.4vh] shrink-0 font-tech text-slate-500 uppercase tracking-widest text-center">
       BIBLE CHALLENGE ESPECIAL: JOÃO 2026
     </footer>
   </div>
@@ -292,8 +308,6 @@
         <button onclick="toggleSound()" id="sound-toggle-btn" class="bg-slate-900 border border-slate-700 text-slate-300 hover:text-white p-2 rounded-xl text-xs transition cursor-pointer" title="Alternar Som">
           <i id="sound-icon" class="fa-solid fa-volume-high"></i>
         </button>
-
-        <!-- Botão Código ESP Removido na V9 -->
 
         <button onclick="openSettingsModal()" class="bg-slate-900 border border-slate-700 text-slate-300 hover:text-white p-2 rounded-xl text-xs transition cursor-pointer" title="Configurações">
           <i class="fa-solid fa-gear"></i>
@@ -843,7 +857,6 @@
         if (e.target.tagName === 'INPUT') return;
 
         // Inicializa o contexto de áudio IMEDIATAMENTE no evento do teclado
-        // Garantindo que os atalhos funcionem sem precisar usar o mouse antes.
         initAudioContext();
 
         const key = e.key.toLowerCase();
@@ -974,7 +987,7 @@
         osc1.type = 'sawtooth';
         osc2.type = 'sawtooth';
         osc1.frequency.setValueAtTime(150, now);
-        osc2.frequency.setValueAtTime(156, now);
+        osc1.frequency.setValueAtTime(156, now);
 
         gain.gain.setValueAtTime(0.5, now);
         gain.gain.exponentialRampToValueAtTime(0.001, now + 0.45);
@@ -1022,7 +1035,7 @@
         osc.type = 'sawtooth';
         osc.frequency.setValueAtTime(320, now);
 
-        lfo.frequency.setValueAtTime(14, now); // Bode bleat
+        lfo.frequency.setValueAtTime(14, now);
         lfoGain.gain.setValueAtTime(25, now);
         lfo.connect(osc.frequency);
 
@@ -1138,7 +1151,7 @@
     function triggerBuzzer(player) {
       if (state.isBuzzerLocked) return;
 
-      initAudioContext(); // Força o init de áudio caso venha via Serial/Mouse sem keydown prévio
+      initAudioContext();
       
       saveHistory();
       state.isBuzzerLocked = true;
@@ -1478,7 +1491,6 @@
       const audName = document.getElementById('audience-buzzer-name');
       const audP1Card = document.getElementById('audience-p1-card');
       const audP2Card = document.getElementById('audience-p2-card');
-      const audPointsBox = document.getElementById('audience-points-box');
       const audQuestionBox = document.getElementById('audience-question-box');
 
       if (audBanner && audCard && audName) {
@@ -1486,18 +1498,17 @@
         if (player === 1) {
           audCard.style.borderColor = '#00C2CB';
           audCard.style.boxShadow = '0 0 40px rgba(0, 194, 203, 0.5)';
-          audName.className = "font-orbitron font-black text-[8vh] uppercase tracking-wider leading-none text-brand-cyan";
-          if (audP1Card) audP1Card.className = "bg-brand-card/95 border-2 border-brand-cyan rounded-3xl p-[3vh] flex flex-col items-center justify-center gap-[4vh] h-full transition-all duration-300 card-active-p1 shadow-2xl";
-          if (audP2Card) audP2Card.className = "bg-brand-card/95 border-2 border-brand-cardBorder rounded-3xl p-[3vh] flex flex-col items-center justify-center gap-[4vh] h-full transition-all duration-300 card-dimmed shadow-2xl";
+          audName.className = "font-orbitron font-black text-[6.5vh] uppercase tracking-wider leading-none text-brand-cyan";
+          if (audP1Card) audP1Card.className = "bg-brand-card/95 border-2 border-brand-cyan rounded-3xl p-[2.2vh] flex flex-col items-center justify-between h-full transition-all duration-300 card-active-p1 shadow-2xl";
+          if (audP2Card) audP2Card.className = "bg-brand-card/95 border-2 border-brand-cardBorder rounded-3xl p-[2.2vh] flex flex-col items-center justify-between h-full transition-all duration-300 card-dimmed shadow-2xl";
         } else {
           audCard.style.borderColor = '#e11d48';
           audCard.style.boxShadow = '0 0 40px rgba(225, 29, 72, 0.5)';
-          audName.className = "font-orbitron font-black text-[8vh] uppercase tracking-wider leading-none text-brand-pink";
-          if (audP1Card) audP1Card.className = "bg-brand-card/95 border-2 border-brand-cardBorder rounded-3xl p-[3vh] flex flex-col items-center justify-center gap-[4vh] h-full transition-all duration-300 card-dimmed shadow-2xl";
-          if (audP2Card) audP2Card.className = "bg-brand-card/95 border-2 border-brand-pink rounded-3xl p-[3vh] flex flex-col items-center justify-center gap-[4vh] h-full transition-all duration-300 card-active-p2 shadow-2xl";
+          audName.className = "font-orbitron font-black text-[6.5vh] uppercase tracking-wider leading-none text-brand-pink";
+          if (audP1Card) audP1Card.className = "bg-brand-card/95 border-2 border-brand-cardBorder rounded-3xl p-[2.2vh] flex flex-col items-center justify-between h-full transition-all duration-300 card-dimmed shadow-2xl";
+          if (audP2Card) audP2Card.className = "bg-brand-card/95 border-2 border-brand-pink rounded-3xl p-[2.2vh] flex flex-col items-center justify-between h-full transition-all duration-300 card-active-p2 shadow-2xl";
         }
         audBanner.classList.remove('hidden');
-        if (audPointsBox) audPointsBox.classList.add('hidden');
         if (audQuestionBox) audQuestionBox.classList.add('hidden');
       }
     }
@@ -1505,10 +1516,8 @@
     function hideBuzzerBannerUI() {
       const orgBanner = document.getElementById('org-buzzer-banner');
       const audBanner = document.getElementById('audience-buzzer-banner');
-      const audPointsBox = document.getElementById('audience-points-box');
       if (orgBanner) orgBanner.classList.add('hidden');
       if (audBanner) audBanner.classList.add('hidden');
-      if (audPointsBox) audPointsBox.classList.remove('hidden');
       renderCurrentQuestionUI();
 
       const orgP1Card = document.getElementById('org-p1-card');
@@ -1517,7 +1526,7 @@
       const audP2Card = document.getElementById('audience-p2-card');
 
       const normalClass = "bg-brand-card/90 border-2 border-brand-cardBorder rounded-2xl p-4 flex flex-col justify-between transition-all duration-300 space-y-4";
-      const audNormalClass = "bg-brand-card/95 border-2 border-brand-cardBorder rounded-3xl p-[3vh] flex flex-col items-center justify-center gap-[4vh] h-full transition-all duration-300 shadow-2xl";
+      const audNormalClass = "bg-brand-card/95 border-2 border-brand-cardBorder rounded-3xl p-[2.2vh] flex flex-col items-center justify-between h-full transition-all duration-300 shadow-2xl";
 
       if (orgP1Card) orgP1Card.className = normalClass;
       if (orgP2Card) orgP2Card.className = normalClass;
@@ -1699,7 +1708,6 @@
         };
         reader.readAsText(file);
       } else {
-        // Leitura de Excel (.xlsx, .xls, .csv) via SheetJS
         reader.onload = function(e) {
           try {
             const data = new Uint8Array(e.target.result);
@@ -1740,7 +1748,7 @@
       rows.forEach((row, index) => {
         const pergunta = normalizeKey(row, ['pergunta', 'question', 'enunciado', 'questao', 'questão']);
         const resposta = normalizeKey(row, ['resposta_correta', 'resposta', 'answer', 'gabarito', 'correta']);
-        if (!pergunta) return; // Ignora linhas vazias
+        if (!pergunta) return;
 
         const categoria = normalizeKey(row, ['testamento', 'categoria', 'category', 'tema', 'grupo', 'bloco']) || "Geral";
         const livro = normalizeKey(row, ['livro', 'subcategoria', 'subcategory', 'book', 'subtema']) || "Geral";
@@ -1749,7 +1757,6 @@
         const ptsRaw = normalizeKey(row, ['pontos', 'points', 'valor', 'score']);
         const pontos = ptsRaw && !isNaN(parseInt(ptsRaw, 10)) ? parseInt(ptsRaw, 10) : null;
 
-        // Suporte tanto para array "opcoes": ["A", "B"...] quanto para colunas separadas A, B, C, D
         const options = [];
         if (Array.isArray(row.opcoes) && row.opcoes.length > 0) {
           row.opcoes.forEach((optText, idx) => {
@@ -1936,14 +1943,12 @@
         return;
       }
 
-      // Sorteio aleatório genuíno
       const randomIndex = Math.floor(Math.random() * available.length);
       const chosen = available[randomIndex];
 
       usedQuestionIds.add(chosen.id);
       state.currentQuestion = chosen;
 
-      // Se a pergunta trouxer pontuação própria na planilha, atualiza o valor da rodada
       if (chosen.points && chosen.points > 0) {
         state.questionValue = chosen.points;
         const qInput = document.getElementById('question-val-input');
@@ -1953,7 +1958,6 @@
       saveQuestionsToStorage();
       updateFilterStats();
 
-      // Reseta trava do buzzer para a nova pergunta começar limpa
       resetRound();
       logEvent(`📖 Pergunta sorteada [${chosen.category} - ${chosen.subcategory}]: "${chosen.question.substring(0, 45)}..."`);
     }
@@ -2061,7 +2065,6 @@
         serialPort = await navigator.serial.requestPort();
         await serialPort.open({ baudRate: 115200 });
 
-        // Monitora o evento nativo de desconexão do dispositivo (cabo puxado/desconectado)
         navigator.serial.addEventListener('disconnect', handleSerialDisconnect);
 
         document.getElementById('serial-btn-text').innerText = "Dispositivo Conectado";
@@ -2074,7 +2077,6 @@
       }
     }
 
-    // Tratador de desconexão acidental ou física do cabo USB
     function handleSerialDisconnect(event) {
       logEvent("⚠️ ATENÇÃO: Dispositivo ESP32 foi desconectado do computador!");
       
@@ -2121,7 +2123,6 @@
           }
         }
       } catch (error) {
-        // Se a porta for desconectada de surpresa, o leitor dispara uma exceção
         logEvent(`Conexão serial encerrada: ${error.message || error}`);
         handleSerialDisconnect();
       } finally {
@@ -2133,3 +2134,4 @@
   </script>
 </body>
 </html>
+```
