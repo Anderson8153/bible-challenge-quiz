@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BIBLE CHALLENGE ESPECIAL: JOÃO 2026 - Versão 9</title>
+  <title>BIBLE CHALLENGE ESPECIAL: JOÃO 2026 - Versão 9.1</title>
 
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -59,7 +59,6 @@
     ::-webkit-scrollbar-thumb { background: #161c2d; border-radius: 4px; }
     ::-webkit-scrollbar-thumb:hover { background: #00C2CB; }
 
-    /* Fundo fiel da Versão 5/6/8/9 com matriz de pontos e iluminação ciano/magenta */
     body {
       background-color: #04060a;
       background-image: 
@@ -71,7 +70,6 @@
       min-height: 100vh;
     }
 
-    /* Logo Estilizado */
     .logo-bible {
       font-family: 'Orbitron', sans-serif;
       font-weight: 900;
@@ -97,7 +95,6 @@
     .i-custom::before { left: 0.06em; }
     .i-custom::after { right: 0.06em; }
 
-    /* Efeitos de desfoque e desativação de card */
     .card-dimmed {
       opacity: 0.35;
       filter: grayscale(40%);
@@ -123,7 +120,6 @@
       animation: popIn 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
     }
 
-    /* Estilos Específicos para a Tela da Plateia (Sem sobreposição) */
     .audience-fullscreen {
       height: 100vh;
       width: 100vw;
@@ -140,13 +136,12 @@
 <body class="text-white font-sans antialiased select-none min-h-screen flex flex-col justify-between p-3 md:p-5" ondblclick="toggleFullScreenIfAudience(event)">
 
   <!-- =================================================================== -->
-  <!-- 1. CONTAINER TELA DA PLATEIA (MODO AUDIENCE V9) - SEM SOBREPOSIÇÃO  -->
+  <!-- 1. CONTAINER TELA DA PLATEIA (MODO AUDIENCE V9.1)                   -->
   <!-- =================================================================== -->
   <div id="audience-view" class="hidden audience-fullscreen">
     
     <!-- 1. TOPO: LOGO COMPACTO + VALOR DA PERGUNTA + BOTÃO TELA CHEIA -->
     <header class="w-full max-w-[94vw] mx-auto flex items-center justify-between gap-4 shrink-0 pt-[0.5vh]">
-      <!-- Logo Esquerda -->
       <div class="flex items-center">
         <div id="audience-logo-custom-container" class="hidden">
           <img id="audience-logo-img" src="" alt="Quiz Logo" class="max-h-[9vh] object-contain rounded-xl" />
@@ -173,7 +168,6 @@
         </div>
       </div>
 
-      <!-- Centro: Badge de Pontos da Pergunta -->
       <div id="audience-points-box" class="bg-brand-card/95 border-2 border-brand-cyan/50 px-[3.5vw] py-[0.8vh] rounded-2xl text-center shadow-glow-cyan transition-all duration-300">
         <span class="text-[1.2vh] font-tech text-slate-300 uppercase tracking-[0.2em] block font-bold">ESTA PERGUNTA VALE</span>
         <span class="font-orbitron font-black text-[3.4vh] text-brand-cyan tracking-wider drop-shadow-md leading-tight">
@@ -181,7 +175,6 @@
         </span>
       </div>
 
-      <!-- Direita: Botão Tela Cheia (esconde automaticamente ao entrar em fullscreen) -->
       <div class="min-w-[14vw] flex justify-end">
         <button id="audience-fullscreen-btn" onclick="toggleFullScreen()" class="bg-slate-900/80 hover:bg-slate-800 text-[1.5vh] text-slate-300 border border-slate-700 px-[2vh] py-[1vh] rounded-xl transition flex items-center gap-2 cursor-pointer shadow-md">
           <i class="fa-solid fa-expand"></i> Ativar Tela Cheia
@@ -189,9 +182,8 @@
       </div>
     </header>
 
-    <!-- 2. ÁREA CENTRAL DINÂMICA: PERGUNTA OU BANNER DO BUZZER -->
+    <!-- 2. ÁREA CENTRAL DINÂMICA: PERGUNTA E ALTERNATIVAS (COM DESTAQUE DA RESPOSTA ESCOLHIDA) -->
     <section class="w-full max-w-[92vw] mx-auto flex flex-col items-center justify-center shrink-0">
-      <!-- CAIXA DA PERGUNTA ATUAL NA TELA DA PLATEIA -->
       <div id="audience-question-box" class="hidden w-full bg-brand-card/95 border-2 border-brand-gold/60 px-[3vw] py-[1.6vh] rounded-3xl text-center shadow-glow-gold transition-all duration-300 animate-pop-in">
         <div class="flex items-center justify-center mb-[0.6vh]">
           <span id="audience-q-category" class="bg-brand-gold/20 border border-brand-gold/40 text-brand-gold text-[1.4vh] font-tech font-extrabold px-4 py-0.5 rounded-full uppercase tracking-widest">
@@ -202,28 +194,21 @@
           Texto da pergunta aparecerá aqui...
         </p>
         <div id="audience-q-options" class="hidden grid-cols-2 gap-[1.2vw] mt-[1.4vh] text-left max-w-[82vw] mx-auto">
-          <!-- Alternativas A, B, C, D injetadas via JS se existirem -->
-        </div>
-      </div>
-
-      <!-- BANNER ACIONAMENTO RESPOSTA -->
-      <div id="audience-buzzer-banner" class="w-full max-w-[80vw] mx-auto flex items-center justify-center hidden">
-        <div id="audience-buzzer-card" class="bg-brand-card/98 border-4 rounded-3xl px-[4vw] py-[2vh] text-center shadow-2xl transition-all duration-300 w-full animate-pop-in">
-          <span class="text-[1.8vh] font-tech font-extrabold tracking-[0.2em] text-slate-300 uppercase block mb-[0.5vh]">
-            ⚡ APERTOU O BOTÃO PRIMEIRO!
-          </span>
-          <h2 id="audience-buzzer-name" class="font-orbitron font-black text-[6.5vh] uppercase tracking-wider leading-none">
-            PARTICIPANTE 1
-          </h2>
+          <!-- Alternativas A, B, C, D injetadas via JS -->
         </div>
       </div>
     </section>
 
-    <!-- 3. PAINEL INFERIOR: JOGADORES E CRONÔMETRO (OCUPA O ESPAÇO RESTANTE SEM COLIDIR) -->
-    <main class="w-full max-w-[92vw] mx-auto grid grid-cols-3 gap-[3vw] items-stretch flex-1 min-h-0">
+    <!-- 3. PAINEL INFERIOR: JOGADORES E CRONÔMETRO -->
+    <!-- Por padrão (sem buzzer): 2 colunas (Jogador 1 e Jogador 2) e cronômetro oculto -->
+    <!-- Quando um jogador aperta: o outro jogador desaparece e o cronômetro aparece ao lado do jogador ativo -->
+    <main id="audience-bottom-grid" class="w-full max-w-[92vw] mx-auto grid grid-cols-2 gap-[3vw] items-stretch flex-1 min-h-0 transition-all duration-300">
       
       <!-- CARD JOGADOR 1 -->
       <div id="audience-p1-card" class="bg-brand-card/95 border-2 border-brand-cardBorder rounded-3xl p-[2.2vh] flex flex-col items-center justify-between h-full transition-all duration-300 shadow-2xl">
+        <div id="audience-p1-active-badge" class="hidden bg-brand-cyan text-black font-tech font-black text-[1.6vh] px-4 py-0.5 rounded-full uppercase tracking-widest animate-pulse">
+          ⚡ APERTOU O BOTÃO PRIMEIRO!
+        </div>
         <div class="flex-1 flex items-center justify-center w-full">
           <h3 id="audience-p1-name" class="font-orbitron font-black text-[4.8vh] text-white uppercase text-center tracking-wide leading-tight drop-shadow-lg break-words w-full px-[1vw]">
             Participante 1
@@ -235,8 +220,8 @@
         </div>
       </div>
 
-      <!-- CRONÔMETRO CENTRAL -->
-      <div class="flex flex-col items-center justify-center h-full">
+      <!-- CRONÔMETRO CENTRAL (OCULTO ATÉ QUE UM PARTICIPANTE APERTE O BOTÃO) -->
+      <div id="audience-timer-container" class="hidden flex-col items-center justify-center h-full animate-pop-in">
         <div class="relative w-[30vmin] h-[30vmin] max-w-full max-h-full flex items-center justify-center">
           <svg class="w-full h-full transform -rotate-90" viewBox="0 0 256 256">
             <circle cx="128" cy="128" r="110" stroke="rgba(255,255,255,0.08)" stroke-width="16" fill="none" />
@@ -255,6 +240,9 @@
 
       <!-- CARD JOGADOR 2 -->
       <div id="audience-p2-card" class="bg-brand-card/95 border-2 border-brand-cardBorder rounded-3xl p-[2.2vh] flex flex-col items-center justify-between h-full transition-all duration-300 shadow-2xl">
+        <div id="audience-p2-active-badge" class="hidden bg-brand-pink text-white font-tech font-black text-[1.6vh] px-4 py-0.5 rounded-full uppercase tracking-widest animate-pulse">
+          ⚡ APERTOU O BOTÃO PRIMEIRO!
+        </div>
         <div class="flex-1 flex items-center justify-center w-full">
           <h3 id="audience-p2-name" class="font-orbitron font-black text-[4.8vh] text-white uppercase text-center tracking-wide leading-tight drop-shadow-lg break-words w-full px-[1vw]">
             Participante 2
@@ -275,13 +263,12 @@
 
 
   <!-- =================================================================== -->
-  <!-- 2. CONTAINER PAINEL DO ORGANIZADOR (VERSÃO 9)                       -->
+  <!-- 2. CONTAINER PAINEL DO ORGANIZADOR (VERSÃO 9.1)                     -->
   <!-- =================================================================== -->
   <div id="organizer-view" class="flex flex-col justify-between min-h-screen w-full max-w-7xl mx-auto space-y-4">
     
     <!-- BARRA SUPERIOR DE TOPO -->
     <header class="flex flex-wrap items-center justify-between gap-3 bg-brand-card/90 border border-brand-cardBorder p-3 rounded-2xl backdrop-blur-md">
-      <!-- LOGO TOPO ESQUERDO -->
       <div class="flex items-center space-x-3">
         <div class="flex flex-col">
           <div class="flex items-center space-x-1.5">
@@ -289,12 +276,11 @@
             <span class="font-tech font-bold text-xs text-white tracking-widest">CHALLENGE</span>
           </div>
           <div class="bg-brand-cyan text-black px-2 py-0.2 rounded text-[10px] font-tech font-black tracking-wider uppercase mt-0.5">
-            ESPECIAL : JOÃO <span class="text-black font-extrabold">2026 (V9)</span>
+            ESPECIAL : JOÃO <span class="text-black font-extrabold">2026 (V9.1)</span>
           </div>
         </div>
       </div>
 
-      <!-- BOTÕES AÇÕES SUPERIORES -->
       <div class="flex flex-wrap items-center gap-2">
         <button onclick="openAudienceWindow()" class="bg-brand-cyan text-black hover:bg-brand-cyanHover px-3 py-1.5 rounded-xl font-tech font-extrabold text-xs uppercase tracking-wider transition flex items-center gap-1.5 cursor-pointer shadow-glow-cyan">
           <i class="fa-solid fa-desktop"></i> Abrir Tela da Plateia
@@ -335,14 +321,12 @@
         </div>
       </div>
 
-      <!-- BOTÃO DESFAZER CENTRALIZADO -->
       <div>
         <button onclick="undoLastAction()" class="bg-slate-900 hover:bg-slate-800 text-brand-cyan border border-brand-cyan/40 px-4 py-2 rounded-xl font-tech font-extrabold text-xs uppercase tracking-wider transition flex items-center gap-2 cursor-pointer">
           <i class="fa-solid fa-rotate-left"></i> Desfazer Última Rodada
         </button>
       </div>
 
-      <!-- MULTIPLICADOR BASE INDICATOR -->
       <div class="text-right">
         <span class="text-[10px] font-tech text-slate-400 uppercase tracking-widest block font-bold">MULTIPLICADOR BASE</span>
         <span class="font-tech font-bold text-xs text-slate-300">
@@ -352,7 +336,7 @@
     </div>
 
 
-    <!-- PAINEL DE CONTROLE DE PERGUNTAS (ORGANIZADOR) -->
+    <!-- PAINEL DE CONTROLE DE PERGUNTAS (ORGANIZADOR COM SELEÇÃO DA ALTERNATIVA) -->
     <div id="organizer-question-panel" class="bg-brand-card/95 border border-brand-gold/40 rounded-2xl p-4 shadow-lg">
       <div class="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-white/10">
         <div class="flex items-center gap-2.5">
@@ -383,18 +367,22 @@
         </div>
       </div>
 
-      <!-- CORPO DA PERGUNTA SORTEADA (VISÍVEL SÓ PARA O ORGANIZADOR) -->
+      <!-- CORPO DA PERGUNTA SORTEADA (CLIQUE NA ALTERNATIVA PARA EXIBIR A ESCOLHA NA PLATEIA) -->
       <div id="org-question-content" class="pt-3 grid grid-cols-1 lg:grid-cols-3 gap-4 items-center">
         <div class="lg:col-span-2 space-y-1.5">
-          <div class="flex items-center gap-2">
+          <div class="flex items-center justify-between gap-2">
             <span id="org-q-cat-tag" class="text-[10px] font-tech font-black uppercase px-2 py-0.5 rounded bg-brand-cyan/20 text-brand-cyan border border-brand-cyan/30">
               AGUARDANDO SORTEIO
+            </span>
+            <span id="org-selected-opt-hint" class="hidden text-[11px] font-tech font-bold text-brand-gold uppercase">
+              <i class="fa-solid fa-hand-pointer mr-1"></i> Resposta marcada na plateia: <b id="org-selected-opt-letter"></b> (Clique novamente para desmarcar)
             </span>
           </div>
           <p id="org-q-text-display" class="font-sans font-bold text-sm md:text-base text-white">
             Clique em "Sortear Próxima Pergunta" ou importe sua lista de perguntas nas Configurações (⚙️).
           </p>
-          <div id="org-q-options-display" class="hidden grid-cols-2 gap-1.5 pt-1 text-xs font-sans text-slate-300">
+          <div id="org-q-options-display" class="hidden grid-cols-2 gap-2 pt-1.5 text-xs font-sans text-slate-300">
+            <!-- Botões clicáveis das alternativas injetados via JS -->
           </div>
         </div>
 
@@ -432,7 +420,6 @@
 
       <!-- ================= JOGADOR 1 (COLUNA ESQUERDA) ================= -->
       <div id="org-p1-card" class="bg-brand-card/90 border-2 border-brand-cardBorder rounded-2xl p-4 flex flex-col justify-between transition-all duration-300 space-y-4">
-        <!-- HEADER JOGADOR 1 -->
         <div class="flex items-center justify-between">
           <div class="bg-brand-cyan/10 border border-brand-cyan/30 text-brand-cyan text-[11px] font-tech font-extrabold px-3 py-1 rounded-full uppercase">
             <i class="fa-solid fa-user mr-1"></i> JOGADOR 1 (ATALHO: A)
@@ -442,12 +429,10 @@
           </span>
         </div>
 
-        <!-- NOME INPUT JOGADOR 1 -->
         <div class="bg-black/60 border border-white/10 rounded-xl p-2 text-center">
           <input type="text" id="p1-name-input" value="Participante 1" oninput="updatePlayerNames()" onkeyup="updatePlayerNames()" class="w-full bg-transparent text-center font-orbitron font-bold text-xl text-white outline-none focus:text-brand-cyan uppercase" />
         </div>
 
-        <!-- CAIXA DE PONTUAÇÃO TOTAL JOGADOR 1 -->
         <div class="bg-black/80 border border-white/10 rounded-xl py-4 text-center">
           <span class="text-[10px] font-tech text-slate-400 uppercase tracking-widest block mb-1">PONTUAÇÃO TOTAL</span>
           <div class="font-orbitron font-black text-6xl text-brand-cyan drop-shadow-md">
@@ -455,7 +440,6 @@
           </div>
         </div>
 
-        <!-- BOTÃO BUZZER JOGADOR 1 -->
         <div class="flex flex-col items-center justify-center">
           <button id="p1-buzzer-btn" onclick="triggerBuzzer(1)" class="w-24 h-24 bg-brand-cyan hover:bg-brand-cyanHover text-black rounded-full flex flex-col items-center justify-center shadow-glow-cyan transition-all transform active:scale-95 cursor-pointer">
             <i class="fa-solid fa-hand-pointer text-2xl mb-1"></i>
@@ -463,7 +447,6 @@
           </button>
         </div>
 
-        <!-- AJUSTE MANUAL JOGADOR 1 -->
         <div class="pt-2 border-t border-white/5 flex items-center justify-between">
           <span class="text-[10px] font-tech text-slate-400 uppercase font-bold">Ajuste Manual:</span>
           <div class="flex space-x-1">
@@ -478,14 +461,12 @@
 
       <!-- ================= COLUNA CENTRAL (CRONÔMETRO E BOTÕES CERTA/ERRADA) ================= -->
       <div class="bg-brand-card/90 border-2 border-brand-cardBorder rounded-2xl p-4 flex flex-col justify-between items-center text-center space-y-3">
-        <!-- STATUS CRONÔMETRO -->
         <div class="w-full">
           <span id="timer-status-badge" class="bg-brand-cyan/10 border border-brand-cyan/30 text-brand-cyan text-[11px] font-tech font-extrabold px-3 py-1 rounded-full uppercase tracking-wider inline-block">
             🟢 PRONTO PARA RESPONDER
           </span>
         </div>
 
-        <!-- CRONÔMETRO CENTRAL -->
         <div class="relative w-44 h-44 flex items-center justify-center my-1">
           <svg class="w-full h-full transform -rotate-90" viewBox="0 0 256 256">
             <circle cx="128" cy="128" r="110" stroke="rgba(255,255,255,0.08)" stroke-width="14" fill="none" />
@@ -501,7 +482,6 @@
           </div>
         </div>
 
-        <!-- CONTROLES DO CRONÔMETRO -->
         <div class="flex items-center space-x-2 w-full justify-center">
           <button id="pause-timer-btn" onclick="togglePauseTimer()" class="bg-brand-cyan text-black hover:bg-brand-cyanHover font-tech font-extrabold text-xs px-3 py-2 rounded-xl uppercase tracking-wider transition flex items-center gap-1.5 cursor-pointer">
             <i class="fa-solid fa-pause"></i> Pausar Tempo
@@ -511,11 +491,9 @@
           </button>
         </div>
 
-        <!-- SEÇÃO DECISÃO DA RESPOSTA -->
         <div class="w-full pt-2 border-t border-white/5 space-y-2">
           <span class="text-[10px] font-tech text-slate-400 uppercase font-bold tracking-widest block">DECISÃO DA RESPOSTA</span>
           
-          <!-- BOTÕES PRINCIPAIS CERTA E ERRADA -->
           <div class="grid grid-cols-2 gap-2 w-full">
             <button id="btn-correct-ans" onclick="triggerCorrectAnswer()" class="bg-emerald-500 hover:bg-emerald-400 text-black font-black py-2.5 px-3 rounded-xl font-tech uppercase text-xs tracking-wider transition transform active:scale-95 cursor-pointer flex items-center justify-center gap-1.5 shadow-glow-green">
               <i class="fa-solid fa-circle-check text-base"></i> <span>RESPOSTA CERTA</span>
@@ -526,7 +504,6 @@
             </button>
           </div>
 
-          <!-- OPÇÕES SECUNDÁRIAS -->
           <div class="flex gap-2 w-full pt-1">
             <button onclick="skipQuestion()" class="w-full bg-slate-900 border border-slate-700 text-slate-300 hover:text-white font-extrabold py-1.5 px-2 rounded-xl font-tech uppercase text-[11px] tracking-wider transition transform active:scale-95 cursor-pointer flex items-center justify-center gap-1">
               <i class="fa-solid fa-forward-step"></i> PULAR PERGUNTA (0 PTS)
@@ -538,7 +515,6 @@
 
       <!-- ================= JOGADOR 2 (COLUNA DIREITA) ================= -->
       <div id="org-p2-card" class="bg-brand-card/90 border-2 border-brand-cardBorder rounded-2xl p-4 flex flex-col justify-between transition-all duration-300 space-y-4">
-        <!-- HEADER JOGADOR 2 -->
         <div class="flex items-center justify-between">
           <div class="bg-brand-pink/10 border border-brand-pink/30 text-brand-pink text-[11px] font-tech font-extrabold px-3 py-1 rounded-full uppercase">
             <i class="fa-solid fa-user mr-1"></i> JOGADOR 2 (ATALHO: L)
@@ -548,12 +524,10 @@
           </span>
         </div>
 
-        <!-- NOME INPUT JOGADOR 2 -->
         <div class="bg-black/60 border border-white/10 rounded-xl p-2 text-center">
           <input type="text" id="p2-name-input" value="Participante 2" oninput="updatePlayerNames()" onkeyup="updatePlayerNames()" class="w-full bg-transparent text-center font-orbitron font-bold text-xl text-white outline-none focus:text-brand-pink uppercase" />
         </div>
 
-        <!-- CAIXA DE PONTUAÇÃO TOTAL JOGADOR 2 -->
         <div class="bg-black/80 border border-white/10 rounded-xl py-4 text-center">
           <span class="text-[10px] font-tech text-slate-400 uppercase tracking-widest block mb-1">PONTUAÇÃO TOTAL</span>
           <div class="font-orbitron font-black text-6xl text-brand-pink drop-shadow-md">
@@ -561,7 +535,6 @@
           </div>
         </div>
 
-        <!-- BOTÃO BUZZER JOGADOR 2 -->
         <div class="flex flex-col items-center justify-center">
           <button id="p2-buzzer-btn" onclick="triggerBuzzer(2)" class="w-24 h-24 bg-brand-pink hover:bg-brand-pinkHover text-white rounded-full flex flex-col items-center justify-center shadow-glow-pink transition-all transform active:scale-95 cursor-pointer">
             <i class="fa-solid fa-hand-pointer text-2xl mb-1"></i>
@@ -569,7 +542,6 @@
           </button>
         </div>
 
-        <!-- AJUSTE MANUAL JOGADOR 2 -->
         <div class="pt-2 border-t border-white/5 flex items-center justify-between">
           <span class="text-[10px] font-tech text-slate-400 uppercase font-bold">Ajuste Manual:</span>
           <div class="flex space-x-1">
@@ -594,7 +566,7 @@
         </button>
       </div>
       <div id="serial-log-box" class="bg-black/90 rounded-lg p-2 font-mono text-[11px] text-slate-300 h-16 overflow-y-auto border border-white/5 space-y-0.5">
-        <div>[Sistema] BIBLE CHALLENGE ESPECIAL: JOÃO 2026 (Versão 9) pronto.</div>
+        <div>[Sistema] BIBLE CHALLENGE ESPECIAL: JOÃO 2026 (Versão 9.1) pronto.</div>
       </div>
     </div>
 
@@ -605,7 +577,7 @@
         Atalhos: <b class="text-brand-cyan">A</b> Buzzer P1 | <b class="text-brand-pink">L</b> Buzzer P2 | <b class="text-brand-gold">Espaço</b> Pausa Timer
       </div>
       <div class="text-right text-slate-500 font-bold">
-        BIBLE CHALLENGE ESPECIAL: JOÃO 2026 - VERSÃO 9
+        BIBLE CHALLENGE ESPECIAL: JOÃO 2026 - VERSÃO 9.1
       </div>
     </footer>
   </div>
@@ -688,7 +660,6 @@
             </span>
           </div>
 
-          <!-- SELEÇÃO DE TEMA (CATEGORIA E LIVRO) -->
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
             <div class="flex flex-col space-y-1">
               <label class="text-xs font-tech font-bold text-slate-300 uppercase">1. Categoria / Testamento:</label>
@@ -757,7 +728,7 @@
   </div>
 
   <!-- =================================================================== -->
-  <!-- 4. SCRIPT COMPLETO DA APLICAÇÃO (VERSÃO 9)                          -->
+  <!-- 4. SCRIPT COMPLETO DA APLICAÇÃO (VERSÃO 9.1)                        -->
   <!-- =================================================================== -->
   <script>
     /* -------------------------------------------------------------------
@@ -777,8 +748,8 @@
       activeBuzzerPlayer: null, // 1 ou 2
       customLogoUrl: "",
       soundEnabled: true,
-      // Novos estados para o Banco de Perguntas
       currentQuestion: null,
+      selectedOptionLabel: null, // 'A', 'B', 'C', 'D' (Alternativa marcada pelo participante)
       showQuestionOnAudience: true,
       selectedCategory: "ALL",
       selectedSubcategory: "ALL",
@@ -786,7 +757,6 @@
       usedInFilterCount: 0
     };
 
-    // Banco de perguntas em memória (salvo também no localStorage para não perder se atualizar)
     let questionBank = [];
     let usedQuestionIds = new Set();
 
@@ -806,7 +776,7 @@
        ------------------------------------------------------------------- */
     window.addEventListener('DOMContentLoaded', () => {
       if (isAudienceMode) {
-        document.title = "BIBLE CHALLENGE - PLATEIA (V9)";
+        document.title = "BIBLE CHALLENGE - PLATEIA (V9.1)";
         document.getElementById('organizer-view').classList.add('hidden');
         document.getElementById('audience-view').classList.remove('hidden');
 
@@ -832,10 +802,6 @@
         } else if (data.type === 'STATE_UPDATE') {
           Object.assign(state, data.state);
           updateAllDisplays();
-        } else if (data.type === 'BUZZER_POPUP') {
-          showBuzzerBannerUI(data.player, data.name);
-        } else if (data.type === 'CLOSE_POPUP') {
-          hideBuzzerBannerUI();
         } else if (data.type === 'SHOW_CORRECT_POPUP') {
           showCorrectPopupUI(data.name, data.points);
         } else if (data.type === 'SHOW_WRONG_POPUP') {
@@ -851,12 +817,10 @@
         }
       };
 
-      // Listener de Atalhos: Resolvido o bloqueio de Autoplay V9
       window.addEventListener('keydown', (e) => {
         if (isAudienceMode) return;
         if (e.target.tagName === 'INPUT') return;
 
-        // Inicializa o contexto de áudio IMEDIATAMENTE no evento do teclado
         initAudioContext();
 
         const key = e.key.toLowerCase();
@@ -1163,9 +1127,7 @@
       playBuzzerSound();
       broadcastAction('PLAY_SOUND', { sound: 'buzzer' });
 
-      showBuzzerBannerUI(player, playerName);
-      broadcastAction('BUZZER_POPUP', { player, name: playerName });
-
+      updateAllDisplays();
       startTimer();
     }
 
@@ -1311,11 +1273,10 @@
       state.isTimerRunning = false;
       state.isBuzzerLocked = false;
       state.activeBuzzerPlayer = null;
+      state.selectedOptionLabel = null;
       state.timeRemaining = state.roundTime;
 
-      hideBuzzerBannerUI();
       closeAnswerPopupsUI();
-      broadcastAction('CLOSE_POPUP');
       broadcastAction('CLOSE_ANSWER_POPUPS');
 
       updateAllDisplays();
@@ -1342,7 +1303,7 @@
 
 
     /* -------------------------------------------------------------------
-       6. ATUALIZAÇÃO DA INTERFACE DO USUÁRIO
+       6. ATUALIZAÇÃO DA INTERFACE DO USUÁRIO (ORGANIZADOR E PLATEIA)
        ------------------------------------------------------------------- */
     function updateAllDisplays() {
       const p1ScoreDisp = document.getElementById('p1-score-display');
@@ -1368,8 +1329,11 @@
       if (baseDisp) baseDisp.innerText = state.basePointMultiplier;
       if (audQVal) audQVal.innerText = effectivePoints;
 
-      // Atualiza exibição da pergunta atual (Organizador e Plateia)
+      // Atualiza a pergunta e a alternativa selecionada
       renderCurrentQuestionUI();
+
+      // Atualiza estado visual do Buzzer e Visibilidade do Cronômetro na Plateia
+      syncBuzzerAndTimerLayout();
 
       const orgTimerDisplay = document.getElementById('org-timer-display');
       const audTimerDisplay = document.getElementById('audience-timer-display');
@@ -1456,82 +1420,96 @@
       }
     }
 
-    function showBuzzerBannerUI(player, playerName) {
+    function syncBuzzerAndTimerLayout() {
+      // 1. Painel do Organizador
       const orgBanner = document.getElementById('org-buzzer-banner');
       const orgCard = document.getElementById('org-buzzer-card');
       const orgName = document.getElementById('org-buzzer-name');
-
-      if (orgBanner && orgCard && orgName) {
-        orgName.innerText = playerName;
-        if (player === 1) {
-          orgCard.style.borderColor = '#00C2CB';
-          orgCard.style.boxShadow = '0 0 35px rgba(0, 194, 203, 0.5)';
-          orgName.className = "font-orbitron font-black text-3xl md:text-5xl uppercase tracking-wider my-1 text-brand-cyan drop-shadow-md";
-        } else {
-          orgCard.style.borderColor = '#e11d48';
-          orgCard.style.boxShadow = '0 0 35px rgba(225, 29, 72, 0.5)';
-          orgName.className = "font-orbitron font-black text-3xl md:text-5xl uppercase tracking-wider my-1 text-brand-pink drop-shadow-md";
-        }
-        orgBanner.classList.remove('hidden');
-      }
-
       const orgP1Card = document.getElementById('org-p1-card');
       const orgP2Card = document.getElementById('org-p2-card');
 
-      if (player === 1) {
-        if (orgP1Card) orgP1Card.className = "bg-brand-card/90 border-2 border-brand-cyan rounded-2xl p-4 flex flex-col justify-between transition-all duration-300 space-y-4 card-active-p1";
-        if (orgP2Card) orgP2Card.className = "bg-brand-card/90 border-2 border-brand-cardBorder rounded-2xl p-4 flex flex-col justify-between transition-all duration-300 space-y-4 card-dimmed";
-      } else {
-        if (orgP1Card) orgP1Card.className = "bg-brand-card/90 border-2 border-brand-cardBorder rounded-2xl p-4 flex flex-col justify-between transition-all duration-300 space-y-4 card-dimmed";
-        if (orgP2Card) orgP2Card.className = "bg-brand-card/90 border-2 border-brand-pink rounded-2xl p-4 flex flex-col justify-between transition-all duration-300 space-y-4 card-active-p2";
-      }
-
-      const audBanner = document.getElementById('audience-buzzer-banner');
-      const audCard = document.getElementById('audience-buzzer-card');
-      const audName = document.getElementById('audience-buzzer-name');
+      // 2. Tela da Plateia
+      const audBottomGrid = document.getElementById('audience-bottom-grid');
+      const audTimerContainer = document.getElementById('audience-timer-container');
       const audP1Card = document.getElementById('audience-p1-card');
       const audP2Card = document.getElementById('audience-p2-card');
-      const audQuestionBox = document.getElementById('audience-question-box');
+      const audP1Badge = document.getElementById('audience-p1-active-badge');
+      const audP2Badge = document.getElementById('audience-p2-active-badge');
 
-      if (audBanner && audCard && audName) {
-        audName.innerText = playerName;
-        if (player === 1) {
-          audCard.style.borderColor = '#00C2CB';
-          audCard.style.boxShadow = '0 0 40px rgba(0, 194, 203, 0.5)';
-          audName.className = "font-orbitron font-black text-[6.5vh] uppercase tracking-wider leading-none text-brand-cyan";
-          if (audP1Card) audP1Card.className = "bg-brand-card/95 border-2 border-brand-cyan rounded-3xl p-[2.2vh] flex flex-col items-center justify-between h-full transition-all duration-300 card-active-p1 shadow-2xl";
-          if (audP2Card) audP2Card.className = "bg-brand-card/95 border-2 border-brand-cardBorder rounded-3xl p-[2.2vh] flex flex-col items-center justify-between h-full transition-all duration-300 card-dimmed shadow-2xl";
-        } else {
-          audCard.style.borderColor = '#e11d48';
-          audCard.style.boxShadow = '0 0 40px rgba(225, 29, 72, 0.5)';
-          audName.className = "font-orbitron font-black text-[6.5vh] uppercase tracking-wider leading-none text-brand-pink";
-          if (audP1Card) audP1Card.className = "bg-brand-card/95 border-2 border-brand-cardBorder rounded-3xl p-[2.2vh] flex flex-col items-center justify-between h-full transition-all duration-300 card-dimmed shadow-2xl";
-          if (audP2Card) audP2Card.className = "bg-brand-card/95 border-2 border-brand-pink rounded-3xl p-[2.2vh] flex flex-col items-center justify-between h-full transition-all duration-300 card-active-p2 shadow-2xl";
-        }
-        audBanner.classList.remove('hidden');
-        if (audQuestionBox) audQuestionBox.classList.add('hidden');
-      }
-    }
-
-    function hideBuzzerBannerUI() {
-      const orgBanner = document.getElementById('org-buzzer-banner');
-      const audBanner = document.getElementById('audience-buzzer-banner');
-      if (orgBanner) orgBanner.classList.add('hidden');
-      if (audBanner) audBanner.classList.add('hidden');
-      renderCurrentQuestionUI();
-
-      const orgP1Card = document.getElementById('org-p1-card');
-      const orgP2Card = document.getElementById('org-p2-card');
-      const audP1Card = document.getElementById('audience-p1-card');
-      const audP2Card = document.getElementById('audience-p2-card');
-
-      const normalClass = "bg-brand-card/90 border-2 border-brand-cardBorder rounded-2xl p-4 flex flex-col justify-between transition-all duration-300 space-y-4";
+      const orgNormalClass = "bg-brand-card/90 border-2 border-brand-cardBorder rounded-2xl p-4 flex flex-col justify-between transition-all duration-300 space-y-4";
       const audNormalClass = "bg-brand-card/95 border-2 border-brand-cardBorder rounded-3xl p-[2.2vh] flex flex-col items-center justify-between h-full transition-all duration-300 shadow-2xl";
 
-      if (orgP1Card) orgP1Card.className = normalClass;
-      if (orgP2Card) orgP2Card.className = normalClass;
-      if (audP1Card) audP1Card.className = audNormalClass;
-      if (audP2Card) audP2Card.className = audNormalClass;
+      if (!state.activeBuzzerPlayer) {
+        // ESTADO DE ESPERA: Cronômetro oculto na plateia, 2 participantes visíveis lado a lado
+        if (orgBanner) orgBanner.classList.add('hidden');
+        if (orgP1Card) orgP1Card.className = orgNormalClass;
+        if (orgP2Card) orgP2Card.className = orgNormalClass;
+
+        if (audTimerContainer) {
+          audTimerContainer.classList.add('hidden');
+          audTimerContainer.classList.remove('flex');
+        }
+        if (audP1Card) {
+          audP1Card.className = audNormalClass;
+          audP1Card.classList.remove('hidden');
+        }
+        if (audP2Card) {
+          audP2Card.className = audNormalClass;
+          audP2Card.classList.remove('hidden');
+        }
+        if (audP1Badge) audP1Badge.classList.add('hidden');
+        if (audP2Badge) audP2Badge.classList.add('hidden');
+        if (audBottomGrid) {
+          audBottomGrid.className = "w-full max-w-[92vw] mx-auto grid grid-cols-2 gap-[3vw] items-stretch flex-1 min-h-0 transition-all duration-300";
+        }
+      } else {
+        // PARTICIPANTE APERTOU O BOTÃO:
+        const player = state.activeBuzzerPlayer;
+        const playerName = player === 1 ? state.p1Name : state.p2Name;
+
+        // Organizador
+        if (orgBanner && orgCard && orgName) {
+          orgName.innerText = playerName;
+          if (player === 1) {
+            orgCard.style.borderColor = '#00C2CB';
+            orgCard.style.boxShadow = '0 0 35px rgba(0, 194, 203, 0.5)';
+            orgName.className = "font-orbitron font-black text-3xl md:text-5xl uppercase tracking-wider my-1 text-brand-cyan drop-shadow-md";
+            if (orgP1Card) orgP1Card.className = orgNormalClass + " card-active-p1";
+            if (orgP2Card) orgP2Card.className = orgNormalClass + " card-dimmed";
+          } else {
+            orgCard.style.borderColor = '#e11d48';
+            orgCard.style.boxShadow = '0 0 35px rgba(225, 29, 72, 0.5)';
+            orgName.className = "font-orbitron font-black text-3xl md:text-5xl uppercase tracking-wider my-1 text-brand-pink drop-shadow-md";
+            if (orgP1Card) orgP1Card.className = orgNormalClass + " card-dimmed";
+            if (orgP2Card) orgP2Card.className = orgNormalClass + " card-active-p2";
+          }
+          orgBanner.classList.remove('hidden');
+        }
+
+        // Plateia: Esconde o outro participante e exibe o cronômetro ao lado do participante ativo
+        if (audTimerContainer) {
+          audTimerContainer.classList.remove('hidden');
+          audTimerContainer.classList.add('flex');
+        }
+
+        if (player === 1) {
+          if (audP1Card) {
+            audP1Card.className = audNormalClass + " card-active-p1";
+            audP1Card.classList.remove('hidden');
+          }
+          if (audP1Badge) audP1Badge.classList.remove('hidden');
+          if (audP2Card) audP2Card.classList.add('hidden');
+          if (audP2Badge) audP2Badge.classList.add('hidden');
+        } else {
+          if (audP2Card) {
+            audP2Card.className = audNormalClass + " card-active-p2";
+            audP2Card.classList.remove('hidden');
+          }
+          if (audP2Badge) audP2Badge.classList.remove('hidden');
+          if (audP1Card) audP1Card.classList.add('hidden');
+          if (audP1Badge) audP1Badge.classList.add('hidden');
+        }
+      }
     }
 
 
@@ -1612,7 +1590,7 @@
 
 
     /* -------------------------------------------------------------------
-       8.5 GERENCIAMENTO DE PERGUNTAS (EXCEL / JSON / CATEGORIAS / SORTEIO)
+       8.5 GERENCIAMENTO DE PERGUNTAS E SELEÇÃO DA ALTERNATIVA ESCOLHIDA
        ------------------------------------------------------------------- */
     function loadSavedQuestionsFromStorage() {
       try {
@@ -1802,6 +1780,7 @@
       state.selectedCategory = "ALL";
       state.selectedSubcategory = "ALL";
       state.currentQuestion = null;
+      state.selectedOptionLabel = null;
 
       saveQuestionsToStorage();
       populateCategoryDropdowns();
@@ -1948,6 +1927,7 @@
 
       usedQuestionIds.add(chosen.id);
       state.currentQuestion = chosen;
+      state.selectedOptionLabel = null;
 
       if (chosen.points && chosen.points > 0) {
         state.questionValue = chosen.points;
@@ -1960,6 +1940,19 @@
 
       resetRound();
       logEvent(`📖 Pergunta sorteada [${chosen.category} - ${chosen.subcategory}]: "${chosen.question.substring(0, 45)}..."`);
+    }
+
+    // Seleciona/desmarca a alternativa escolhida pelo participante para exibir na plateia
+    function selectParticipantOption(label) {
+      if (state.selectedOptionLabel === label) {
+        state.selectedOptionLabel = null;
+        logEvent(`Seleção da alternativa (${label}) removida.`);
+      } else {
+        state.selectedOptionLabel = label;
+        logEvent(`Alternativa (${label}) marcada como escolha do participante na plateia.`);
+      }
+      updateAllDisplays();
+      broadcastState();
     }
 
     function toggleQuestionOnAudience() {
@@ -1982,11 +1975,22 @@
         }
       }
 
-      // 2. Atualiza Card do Organizador
+      // 2. Atualiza Card do Organizador (Alternativas Clicáveis)
       const orgCatTag = document.getElementById('org-q-cat-tag');
       const orgText = document.getElementById('org-q-text-display');
       const orgOpts = document.getElementById('org-q-options-display');
       const orgAns = document.getElementById('org-q-answer-display');
+      const orgHint = document.getElementById('org-selected-opt-hint');
+      const orgHintLetter = document.getElementById('org-selected-opt-letter');
+
+      if (orgHint && orgHintLetter) {
+        if (state.selectedOptionLabel) {
+          orgHintLetter.innerText = state.selectedOptionLabel;
+          orgHint.classList.remove('hidden');
+        } else {
+          orgHint.classList.add('hidden');
+        }
+      }
 
       if (state.currentQuestion && orgCatTag && orgText && orgAns) {
         orgCatTag.innerText = `${state.currentQuestion.category} • ${state.currentQuestion.subcategory}`;
@@ -1997,9 +2001,19 @@
 
         if (orgOpts) {
           if (state.currentQuestion.options && state.currentQuestion.options.length > 0) {
-            orgOpts.innerHTML = state.currentQuestion.options.map(o =>
-              `<div class="bg-black/50 border border-white/10 rounded px-2 py-1"><b class="text-brand-gold">${o.label})</b> ${o.text}</div>`
-            ).join('');
+            orgOpts.innerHTML = state.currentQuestion.options.map(o => {
+              const isSelected = state.selectedOptionLabel === o.label;
+              const btnStyle = isSelected
+                ? "bg-brand-gold/25 border-2 border-brand-gold text-white font-bold shadow-glow-gold"
+                : "bg-black/50 hover:bg-slate-800 border border-white/15 text-slate-300";
+              const badge = isSelected
+                ? `<span class="ml-auto bg-brand-gold text-black text-[10px] font-tech font-black px-1.5 py-0.5 rounded uppercase">ESCOLHIDA</span>`
+                : "";
+              return `<button type="button" onclick="selectParticipantOption('${o.label}')" class="flex items-center text-left rounded-lg px-2.5 py-1.5 transition cursor-pointer ${btnStyle}">
+                <span><b class="text-brand-gold mr-1">${o.label})</b> ${o.text}</span>
+                ${badge}
+              </button>`;
+            }).join('');
             orgOpts.classList.remove('hidden');
             orgOpts.classList.add('grid');
           } else {
@@ -2009,22 +2023,33 @@
         }
       }
 
-      // 3. Atualiza Caixa de Pergunta na Tela da Plateia
+      // 3. Atualiza Caixa de Pergunta na Tela da Plateia (Permanece visível mesmo após o buzzer!)
       const audQBox = document.getElementById('audience-question-box');
       const audQCat = document.getElementById('audience-q-category');
       const audQText = document.getElementById('audience-q-text');
       const audQOpts = document.getElementById('audience-q-options');
 
       if (audQBox && audQCat && audQText) {
-        if (state.currentQuestion && state.showQuestionOnAudience && !state.activeBuzzerPlayer) {
+        if (state.currentQuestion && state.showQuestionOnAudience) {
           audQCat.innerText = `${state.currentQuestion.category} • ${state.currentQuestion.subcategory}`;
           audQText.innerText = state.currentQuestion.question;
 
           if (audQOpts) {
             if (state.currentQuestion.options && state.currentQuestion.options.length > 0) {
-              audQOpts.innerHTML = state.currentQuestion.options.map(o =>
-                `<div class="bg-black/60 border border-white/15 rounded-xl px-[1.5vw] py-[0.8vh] text-[2vh] font-sans font-bold text-slate-200"><b class="text-brand-gold mr-1">${o.label})</b> ${o.text}</div>`
-              ).join('');
+              audQOpts.innerHTML = state.currentQuestion.options.map(o => {
+                const isSelected = state.selectedOptionLabel === o.label;
+                if (isSelected) {
+                  return `<div class="bg-brand-gold/30 border-2 border-brand-gold rounded-xl px-[1.5vw] py-[0.8vh] text-[2vh] font-sans font-black text-white shadow-glow-gold flex items-center justify-between animate-pop-in">
+                    <span><b class="text-brand-gold mr-1.5">${o.label})</b> ${o.text}</span>
+                    <span class="bg-brand-gold text-black text-[1.3vh] font-tech font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider ml-2 shrink-0">
+                      <i class="fa-solid fa-check mr-1"></i> ESCOLHA DO PARTICIPANTE
+                    </span>
+                  </div>`;
+                }
+                return `<div class="bg-black/60 border border-white/15 rounded-xl px-[1.5vw] py-[0.8vh] text-[2vh] font-sans font-bold text-slate-200">
+                  <b class="text-brand-gold mr-1.5">${o.label})</b> ${o.text}
+                </div>`;
+              }).join('');
               audQOpts.classList.remove('hidden');
               audQOpts.classList.add('grid');
             } else {
@@ -2134,4 +2159,3 @@
   </script>
 </body>
 </html>
-```
