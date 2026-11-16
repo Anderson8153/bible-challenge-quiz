@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BIBLE CHALLENGE ESPECIAL: JOÃO 2026 - Versão 9.3</title>
+  <title>BIBLE CHALLENGE ESPECIAL: JOÃO 2026 - Versão 9.4</title>
 
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -137,7 +137,7 @@
 <body class="text-white font-sans antialiased select-none min-h-screen flex flex-col justify-between p-3 md:p-5" ondblclick="toggleFullScreenIfAudience(event)">
 
   <!-- =================================================================== -->
-  <!-- 1. CONTAINER TELA DA PLATEIA (MODO AUDIENCE V9.3)                   -->
+  <!-- 1. CONTAINER TELA DA PLATEIA (MODO AUDIENCE V9.4)                   -->
   <!-- =================================================================== -->
   <div id="audience-view" class="hidden audience-fullscreen">
     
@@ -256,13 +256,13 @@
 
     <!-- RODAPÉ PLATEIA -->
     <footer class="text-[1.4vh] shrink-0 font-tech text-slate-500 uppercase tracking-widest text-center">
-      BIBLE CHALLENGE ESPECIAL: JOÃO 2026 - VERSÃO 9.3
+      BIBLE CHALLENGE ESPECIAL: JOÃO 2026 - VERSÃO 9.4
     </footer>
   </div>
 
 
   <!-- =================================================================== -->
-  <!-- 2. CONTAINER PAINEL DO ORGANIZADOR (VERSÃO 9.3)                     -->
+  <!-- 2. CONTAINER PAINEL DO ORGANIZADOR (VERSÃO 9.4)                     -->
   <!-- =================================================================== -->
   <div id="organizer-view" class="flex flex-col justify-between min-h-screen w-full max-w-7xl mx-auto space-y-4 hidden">
     
@@ -275,7 +275,7 @@
             <span class="font-tech font-bold text-xs text-white tracking-widest">CHALLENGE</span>
           </div>
           <div class="bg-brand-cyan text-black px-2 py-0.2 rounded text-[10px] font-tech font-black tracking-wider uppercase mt-0.5">
-            ESPECIAL : JOÃO <span class="text-black font-extrabold">2026 (V9.3)</span>
+            ESPECIAL : JOÃO <span class="text-black font-extrabold">2026 (V9.4)</span>
           </div>
         </div>
       </div>
@@ -562,7 +562,7 @@
         </button>
       </div>
       <div id="serial-log-box" class="bg-black/90 rounded-lg p-2 font-mono text-[11px] text-slate-300 h-16 overflow-y-auto border border-white/5 space-y-0.5">
-        <div>[Sistema] BIBLE CHALLENGE ESPECIAL: JOÃO 2026 (Versão 9.3) pronto.</div>
+        <div>[Sistema] BIBLE CHALLENGE ESPECIAL: JOÃO 2026 (Versão 9.4) pronto.</div>
       </div>
     </div>
 
@@ -573,7 +573,7 @@
         Atalhos: <b class="text-brand-cyan">A</b> Buzzer P1 | <b class="text-brand-pink">L</b> Buzzer P2 | <b class="text-brand-gold">Espaço</b> Pausa Timer
       </div>
       <div class="text-right text-slate-500 font-bold">
-        BIBLE CHALLENGE ESPECIAL: JOÃO 2026 - VERSÃO 9.3
+        BIBLE CHALLENGE ESPECIAL: JOÃO 2026 - VERSÃO 9.4
       </div>
     </footer>
   </div>
@@ -724,7 +724,7 @@
   </div>
 
   <!-- =================================================================== -->
-  <!-- 4. SCRIPT COMPLETO DA APLICAÇÃO (VERSÃO 9.3)                        -->
+  <!-- 4. SCRIPT COMPLETO DA APLICAÇÃO (VERSÃO 9.4)                        -->
   <!-- =================================================================== -->
   <script>
     /* -------------------------------------------------------------------
@@ -772,7 +772,7 @@
        ------------------------------------------------------------------- */
     window.addEventListener('DOMContentLoaded', () => {
       if (isAudienceMode) {
-        document.title = "BIBLE CHALLENGE - PLATEIA (V9.3)";
+        document.title = "BIBLE CHALLENGE - PLATEIA (V9.4)";
         document.getElementById('organizer-view').classList.add('hidden');
         document.getElementById('audience-view').classList.remove('hidden');
 
@@ -881,7 +881,6 @@
       logEvent(state.soundEnabled ? "Sons ativados." : "Sons desativados.");
     }
 
-    // (Funções de Audio: playBuzzerSound, playWinSound, playWrongSound, playWarningBeep, playTimeUpSound permanecem inalteradas)
     function playBuzzerSound() {
       if (!state.soundEnabled) return;
       initAudioContext();
@@ -1308,13 +1307,20 @@
       resetRound();
     }
 
-    function resetRound() {
+    // A flag keepQuestionVisible decide se a tela da plateia mantém ou esconde a pergunta.
+    // Default = false (Oculta a pergunta no telão assim que a rodada é finalizada).
+    function resetRound(keepQuestionVisible = false) {
       clearInterval(timerInterval);
       state.isTimerRunning = false;
       state.isBuzzerLocked = false;
       state.activeBuzzerPlayer = null;
       state.selectedOptionLabel = null;
       state.timeRemaining = state.roundTime;
+
+      // NOVO V9.4: Oculta a pergunta da plateia ao finalizar a rodada
+      if (!keepQuestionVisible) {
+        state.showQuestionOnAudience = false;
+      }
 
       closeAnswerPopupsUI();
       broadcastAction('CLOSE_ANSWER_POPUPS');
@@ -1968,6 +1974,9 @@
       usedQuestionIds.add(chosen.id);
       state.currentQuestion = chosen;
       state.selectedOptionLabel = null;
+      
+      // NOVO V9.4: Ao sortear uma nova pergunta, forçamos a exibição na plateia
+      state.showQuestionOnAudience = true;
 
       if (chosen.points && chosen.points > 0) {
         state.questionValue = chosen.points;
@@ -1978,7 +1987,9 @@
       saveQuestionsToStorage();
       updateFilterStats();
 
-      resetRound();
+      // Envia flag "true" para não ocultar a pergunta no telão durante a limpeza
+      resetRound(true); 
+      
       logEvent(`📖 Pergunta sorteada [${chosen.category} - ${chosen.subcategory}]: "${chosen.question.substring(0, 45)}..."`);
     }
 
@@ -2079,7 +2090,6 @@
               audQOpts.innerHTML = state.currentQuestion.options.map(o => {
                 const isSelected = state.selectedOptionLabel === o.label;
                 if (isSelected) {
-                  // REMOVIDO "animate-pop-in" para evitar que a seleção fique piscando a cada 1s do timer.
                   return `<div class="bg-brand-gold/30 border-2 border-brand-gold rounded-xl px-[1.5vw] py-[1.2vh] text-[2.4vh] font-sans font-black text-white shadow-glow-gold flex items-center justify-between transition-all duration-300">
                     <span><b class="text-brand-gold mr-1.5">${o.label})</b> ${o.text}</span>
                     <span class="bg-brand-gold text-black text-[1.3vh] font-tech font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider ml-2 shrink-0">
