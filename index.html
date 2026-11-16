@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BIBLE CHALLENGE ESPECIAL: JOÃO 2026 - Versão 9.2</title>
+  <title>BIBLE CHALLENGE ESPECIAL: JOÃO 2026 - Versão 9.3</title>
 
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -46,7 +46,8 @@
             'glow-pink': '0 0 30px rgba(225, 29, 72, 0.45)',
             'glow-gold': '0 0 25px rgba(251, 191, 36, 0.45)',
             'glow-green': '0 0 35px rgba(16, 185, 129, 0.55)',
-            'glow-red': '0 0 35px rgba(239, 68, 68, 0.55)'
+            'glow-red': '0 0 35px rgba(239, 68, 68, 0.55)',
+            'glow-blue': '0 0 30px rgba(37, 99, 235, 0.55)'
           }
         }
       }
@@ -136,11 +137,11 @@
 <body class="text-white font-sans antialiased select-none min-h-screen flex flex-col justify-between p-3 md:p-5" ondblclick="toggleFullScreenIfAudience(event)">
 
   <!-- =================================================================== -->
-  <!-- 1. CONTAINER TELA DA PLATEIA (MODO AUDIENCE V9.2)                   -->
+  <!-- 1. CONTAINER TELA DA PLATEIA (MODO AUDIENCE V9.3)                   -->
   <!-- =================================================================== -->
   <div id="audience-view" class="hidden audience-fullscreen">
     
-    <!-- 1. TOPO: LOGO COMPACTO + VALOR DA PERGUNTA + BOTÃO TELA CHEIA -->
+    <!-- TOPO: LOGO COMPACTO + VALOR DA PERGUNTA + BOTÃO TELA CHEIA -->
     <header class="w-full max-w-[94vw] mx-auto flex items-center justify-between gap-4 shrink-0 pt-[0.5vh]">
       <div class="flex items-center">
         <div id="audience-logo-custom-container" class="hidden">
@@ -182,7 +183,7 @@
       </div>
     </header>
 
-    <!-- 2. ÁREA CENTRAL DINÂMICA: PERGUNTA E ALTERNATIVAS (Expandida na v9.2) -->
+    <!-- ÁREA CENTRAL DINÂMICA: PERGUNTA E ALTERNATIVAS -->
     <section class="w-full max-w-[92vw] mx-auto flex flex-col items-center justify-center flex-1 my-[2vh]">
       <div id="audience-question-box" class="hidden w-full bg-brand-card/95 border-2 border-brand-gold/60 px-[3vw] py-[3vh] rounded-3xl text-center shadow-glow-gold transition-all duration-300 animate-pop-in">
         <div class="flex items-center justify-center mb-[1vh]">
@@ -194,12 +195,12 @@
           Texto da pergunta aparecerá aqui...
         </p>
         <div id="audience-q-options" class="hidden grid-cols-2 gap-[1.5vw] mt-[2.5vh] text-left max-w-[85vw] mx-auto">
-          <!-- Alternativas A, B, C, D injetadas via JS com tamanho maior -->
+          <!-- Alternativas injetadas via JS -->
         </div>
       </div>
     </section>
 
-    <!-- 3. PAINEL INFERIOR: JOGADORES E CRONÔMETRO (Compactado na v9.2 para h-[30vh]) -->
+    <!-- PAINEL INFERIOR: JOGADORES E CRONÔMETRO -->
     <main id="audience-bottom-grid" class="w-full max-w-[92vw] mx-auto grid grid-cols-2 gap-[3vw] items-stretch shrink-0 h-[30vh] transition-all duration-300">
       
       <!-- CARD JOGADOR 1 -->
@@ -253,15 +254,15 @@
       </div>
     </main>
 
-    <!-- 4. RODAPÉ PLATEIA -->
+    <!-- RODAPÉ PLATEIA -->
     <footer class="text-[1.4vh] shrink-0 font-tech text-slate-500 uppercase tracking-widest text-center">
-      BIBLE CHALLENGE ESPECIAL: JOÃO 2026 - VERSÃO 9.2
+      BIBLE CHALLENGE ESPECIAL: JOÃO 2026 - VERSÃO 9.3
     </footer>
   </div>
 
 
   <!-- =================================================================== -->
-  <!-- 2. CONTAINER PAINEL DO ORGANIZADOR (VERSÃO 9.2)                     -->
+  <!-- 2. CONTAINER PAINEL DO ORGANIZADOR (VERSÃO 9.3)                     -->
   <!-- =================================================================== -->
   <div id="organizer-view" class="flex flex-col justify-between min-h-screen w-full max-w-7xl mx-auto space-y-4 hidden">
     
@@ -274,7 +275,7 @@
             <span class="font-tech font-bold text-xs text-white tracking-widest">CHALLENGE</span>
           </div>
           <div class="bg-brand-cyan text-black px-2 py-0.2 rounded text-[10px] font-tech font-black tracking-wider uppercase mt-0.5">
-            ESPECIAL : JOÃO <span class="text-black font-extrabold">2026 (V9.2)</span>
+            ESPECIAL : JOÃO <span class="text-black font-extrabold">2026 (V9.3)</span>
           </div>
         </div>
       </div>
@@ -373,7 +374,7 @@
               AGUARDANDO SORTEIO
             </span>
             <span id="org-selected-opt-hint" class="hidden text-[11px] font-tech font-bold text-brand-gold uppercase">
-              <i class="fa-solid fa-hand-pointer mr-1"></i> Resposta marcada na plateia: <b id="org-selected-opt-letter"></b> (Clique novamente para desmarcar)
+              <i class="fa-solid fa-hand-pointer mr-1"></i> Resposta marcada na plateia: <b id="org-selected-opt-letter"></b> (Clique para alterar)
             </span>
           </div>
           <p id="org-q-text-display" class="font-sans font-bold text-sm md:text-base text-white">
@@ -457,7 +458,7 @@
       </div>
 
 
-      <!-- ================= COLUNA CENTRAL (CRONÔMETRO E BOTÕES CERTA/ERRADA) ================= -->
+      <!-- ================= COLUNA CENTRAL (CRONÔMETRO E BOTÃO CONFERIR) ================= -->
       <div class="bg-brand-card/90 border-2 border-brand-cardBorder rounded-2xl p-4 flex flex-col justify-between items-center text-center space-y-3">
         <div class="w-full">
           <span id="timer-status-badge" class="bg-brand-cyan/10 border border-brand-cyan/30 text-brand-cyan text-[11px] font-tech font-extrabold px-3 py-1 rounded-full uppercase tracking-wider inline-block">
@@ -492,13 +493,10 @@
         <div class="w-full pt-2 border-t border-white/5 space-y-2">
           <span class="text-[10px] font-tech text-slate-400 uppercase font-bold tracking-widest block">DECISÃO DA RESPOSTA</span>
           
-          <div class="grid grid-cols-2 gap-2 w-full">
-            <button id="btn-correct-ans" onclick="triggerCorrectAnswer()" class="bg-emerald-500 hover:bg-emerald-400 text-black font-black py-2.5 px-3 rounded-xl font-tech uppercase text-xs tracking-wider transition transform active:scale-95 cursor-pointer flex items-center justify-center gap-1.5 shadow-glow-green">
-              <i class="fa-solid fa-circle-check text-base"></i> <span>RESPOSTA CERTA</span>
-            </button>
-
-            <button id="btn-wrong-ans" onclick="triggerWrongAnswer()" class="bg-rose-600 hover:bg-rose-500 text-white font-black py-2.5 px-3 rounded-xl font-tech uppercase text-xs tracking-wider transition transform active:scale-95 cursor-pointer flex items-center justify-center gap-1.5 shadow-glow-red">
-              <i class="fa-solid fa-circle-xmark text-base"></i> <span>RESPOSTA ERRADA</span>
+          <!-- BOTÃO UNIFICADO DE CONFERÊNCIA AUTOMÁTICA -->
+          <div class="w-full">
+            <button id="btn-check-ans" onclick="checkParticipantAnswer()" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-black py-3.5 px-3 rounded-xl font-tech uppercase text-[11px] tracking-wider transition transform active:scale-95 cursor-pointer flex items-center justify-center gap-2 shadow-glow-blue">
+              <i class="fa-solid fa-microchip text-lg"></i> <span>CONFERIR RESPOSTA AUTOMATICAMENTE</span>
             </button>
           </div>
 
@@ -564,7 +562,7 @@
         </button>
       </div>
       <div id="serial-log-box" class="bg-black/90 rounded-lg p-2 font-mono text-[11px] text-slate-300 h-16 overflow-y-auto border border-white/5 space-y-0.5">
-        <div>[Sistema] BIBLE CHALLENGE ESPECIAL: JOÃO 2026 (Versão 9.2) pronto.</div>
+        <div>[Sistema] BIBLE CHALLENGE ESPECIAL: JOÃO 2026 (Versão 9.3) pronto.</div>
       </div>
     </div>
 
@@ -575,7 +573,7 @@
         Atalhos: <b class="text-brand-cyan">A</b> Buzzer P1 | <b class="text-brand-pink">L</b> Buzzer P2 | <b class="text-brand-gold">Espaço</b> Pausa Timer
       </div>
       <div class="text-right text-slate-500 font-bold">
-        BIBLE CHALLENGE ESPECIAL: JOÃO 2026 - VERSÃO 9.2
+        BIBLE CHALLENGE ESPECIAL: JOÃO 2026 - VERSÃO 9.3
       </div>
     </footer>
   </div>
@@ -726,7 +724,7 @@
   </div>
 
   <!-- =================================================================== -->
-  <!-- 4. SCRIPT COMPLETO DA APLICAÇÃO (VERSÃO 9.2)                        -->
+  <!-- 4. SCRIPT COMPLETO DA APLICAÇÃO (VERSÃO 9.3)                        -->
   <!-- =================================================================== -->
   <script>
     /* -------------------------------------------------------------------
@@ -774,7 +772,7 @@
        ------------------------------------------------------------------- */
     window.addEventListener('DOMContentLoaded', () => {
       if (isAudienceMode) {
-        document.title = "BIBLE CHALLENGE - PLATEIA (V9.2)";
+        document.title = "BIBLE CHALLENGE - PLATEIA (V9.3)";
         document.getElementById('organizer-view').classList.add('hidden');
         document.getElementById('audience-view').classList.remove('hidden');
 
@@ -883,6 +881,7 @@
       logEvent(state.soundEnabled ? "Sons ativados." : "Sons desativados.");
     }
 
+    // (Funções de Audio: playBuzzerSound, playWinSound, playWrongSound, playWarningBeep, playTimeUpSound permanecem inalteradas)
     function playBuzzerSound() {
       if (!state.soundEnabled) return;
       initAudioContext();
@@ -1176,8 +1175,51 @@
 
 
     /* -------------------------------------------------------------------
-       5. AÇÕES DE RESPOSTA CERTA / ERRADA
+       5. AÇÕES DE RESPOSTA CERTA / ERRADA (AUTO-CHECK)
        ------------------------------------------------------------------- */
+    function checkParticipantAnswer() {
+      if (!state.activeBuzzerPlayer) {
+        alert("Nenhum participante apertou o botão ainda!");
+        return;
+      }
+      if (!state.currentQuestion) {
+        alert("Nenhuma pergunta sorteada no momento.");
+        return;
+      }
+
+      // Fallback para perguntas abertas (Sem alternativas)
+      if (!state.currentQuestion.options || state.currentQuestion.options.length === 0) {
+        if (confirm("Esta pergunta não possui alternativas.\n\nO participante respondeu corretamente?\n\n[OK] = Certa\n[Cancelar] = Errada")) {
+          triggerCorrectAnswer();
+        } else {
+          triggerWrongAnswer();
+        }
+        return;
+      }
+
+      // Validação de Múltipla Escolha
+      if (!state.selectedOptionLabel) {
+        alert("⚠️ Selecione a alternativa escolhida pelo participante (clicando nela no painel) antes de conferir!");
+        return;
+      }
+
+      const selectedOpt = state.currentQuestion.options.find(o => o.label === state.selectedOptionLabel);
+      if (!selectedOpt) return;
+
+      const correctAnswerText = String(state.currentQuestion.answer).trim().toLowerCase();
+      const chosenAnswerText = String(selectedOpt.text).trim().toLowerCase();
+      const chosenLabel = String(selectedOpt.label).trim().toLowerCase();
+
+      // Checa se o texto da alternativa bate ou se o gabarito no arquivo era apenas a letra (ex: "A")
+      const isCorrect = (chosenAnswerText === correctAnswerText) || (chosenLabel === correctAnswerText);
+
+      if (isCorrect) {
+        triggerCorrectAnswer();
+      } else {
+        triggerWrongAnswer();
+      }
+    }
+
     function triggerCorrectAnswer() {
       saveHistory();
       const player = state.activeBuzzerPlayer || 1;
@@ -2021,7 +2063,7 @@
         }
       }
 
-      // 3. Atualiza Caixa de Pergunta na Tela da Plateia (Maior e flexível na V9.2)
+      // 3. Atualiza Caixa de Pergunta na Tela da Plateia
       const audQBox = document.getElementById('audience-question-box');
       const audQCat = document.getElementById('audience-q-category');
       const audQText = document.getElementById('audience-q-text');
@@ -2037,14 +2079,15 @@
               audQOpts.innerHTML = state.currentQuestion.options.map(o => {
                 const isSelected = state.selectedOptionLabel === o.label;
                 if (isSelected) {
-                  return `<div class="bg-brand-gold/30 border-2 border-brand-gold rounded-xl px-[1.5vw] py-[1.2vh] text-[2.4vh] font-sans font-black text-white shadow-glow-gold flex items-center justify-between animate-pop-in">
+                  // REMOVIDO "animate-pop-in" para evitar que a seleção fique piscando a cada 1s do timer.
+                  return `<div class="bg-brand-gold/30 border-2 border-brand-gold rounded-xl px-[1.5vw] py-[1.2vh] text-[2.4vh] font-sans font-black text-white shadow-glow-gold flex items-center justify-between transition-all duration-300">
                     <span><b class="text-brand-gold mr-1.5">${o.label})</b> ${o.text}</span>
                     <span class="bg-brand-gold text-black text-[1.3vh] font-tech font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider ml-2 shrink-0">
                       <i class="fa-solid fa-check mr-1"></i> ESCOLHA DO PARTICIPANTE
                     </span>
                   </div>`;
                 }
-                return `<div class="bg-black/60 border border-white/15 rounded-xl px-[1.5vw] py-[1.2vh] text-[2.4vh] font-sans font-bold text-slate-200">
+                return `<div class="bg-black/60 border border-white/15 rounded-xl px-[1.5vw] py-[1.2vh] text-[2.4vh] font-sans font-bold text-slate-200 transition-all duration-300">
                   <b class="text-brand-gold mr-1.5">${o.label})</b> ${o.text}
                 </div>`;
               }).join('');
